@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: assignment3_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: EmployeeDB
+    ports:
+      - "3307:3306"
+    volumes:
+      # Lưu dữ liệu DB để không bị mất khi tắt Docker
+      - mysql_data:/var/lib/mysql
+      # Tự động chạy script trong thư mục init_db khi khởi tạo lần đầu
+      - ./init_db:/docker-entrypoint-initdb.d
+      
+volumes:
+  mysql_data:
